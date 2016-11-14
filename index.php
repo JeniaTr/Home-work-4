@@ -1,16 +1,23 @@
 <?php
 
-    $databasename='';
-    $user='jenia';
-    $pass='1q2w3e$R';
+    require_once 'vendor/autoload.php';
+    require_once 'ConfigDB.php';
+    require_once  __DIR__.'/src/Repositories/Connector.php';
 
-$dbh = new PDO('mysql:host=localhost;dbname=university', $user, $pass);
 
-$stmt = $dbh->query('SELECT name FROM University');
-while ($row = $stmt->fetch())
-{
-    echo $row['name'] . "\n";
-}
+//    echo var_dump($configuration['pass']);
 
-echo 'dfsdfsd';
-echo $dbh;
+
+    $connector= new Repositories\Connector(
+        $configuration['database'],
+        $configuration['user'],
+        $configuration['pass']
+    );
+
+
+    $stmt =$connector->getPdo()->query('SELECT name FROM University');
+    while ($row = $stmt->fetch())
+    {
+        echo $row['name'] . "\n";
+    }
+
